@@ -10,13 +10,12 @@ RUN /script/test_install_cni_plugins.sh
 
 FROM golang:1.11 as build
 
-ENV BRANCH_OR_TAG=v0.7.4
+ENV BRANCH_OR_TAG=master
 
 WORKDIR /go/src/app
 RUN git clone --branch ${BRANCH_OR_TAG} \
       https://github.com/containernetworking/plugins.git . && \
-    [ -e build_linux.sh ] || curl https://raw.githubusercontent.com/containernetworking/plugins/4e1f7802db08570702ebbbc0bfa4b82e3b800a78/build_linux.sh > build_linux.sh && \
-    chmod 0700 build_linux.sh && \
+    git reset --hard afd7391938547d363dd55800afb44be7ad3b4fcd && \
     ./build_linux.sh
 
 FROM busybox
