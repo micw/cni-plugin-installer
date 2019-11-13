@@ -57,3 +57,9 @@ for FILE in $( find $SRC -maxdepth 1  -type f ); do
 	NAME=$( basename $FILE )
 	install_cni_plugin $NAME
 done
+
+if [ "$KEEP_RUNNING" == "true" ]; then
+  echo "Entering sleep (success)..."
+  trap : TERM INT; (while true; do sleep 1000; done) & wait
+fi
+
