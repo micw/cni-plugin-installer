@@ -15,7 +15,7 @@ ENV BRANCH_OR_TAG=v1.1.1
 WORKDIR /go/src/app
 RUN git clone --branch ${BRANCH_OR_TAG} \
       https://github.com/containernetworking/plugins.git . && \
-    GO111MODULE=on
+    GO111MODULE=on ./build_linux.sh -ldflags="-extldflags=-static" -tags "osusergo netgo"
 
 FROM busybox
 COPY --from=build /go/src/app/bin /opt/cni/bin
