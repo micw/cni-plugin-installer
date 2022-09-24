@@ -10,12 +10,12 @@ RUN /script/test_install_cni_plugins.sh
 
 FROM golang:1.11 as build
 
-ENV BRANCH_OR_TAG=v0.8.3
+ENV BRANCH_OR_TAG=v1.1.1
 
 WORKDIR /go/src/app
 RUN git clone --branch ${BRANCH_OR_TAG} \
       https://github.com/containernetworking/plugins.git . && \
-    ./build_linux.sh
+    GO111MODULE=on
 
 FROM busybox
 COPY --from=build /go/src/app/bin /opt/cni/bin
